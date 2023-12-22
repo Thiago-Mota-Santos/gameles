@@ -1,4 +1,5 @@
 const { resolve } = require("node:path");
+const { off } = require("node:process");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
@@ -55,6 +56,7 @@ module.exports = {
     "typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-misused-promises": "off",
+    "eslint-disable-next-line import/no-relative-packages": "off",
     "unicorn/filename-case": "off",
     "prettier/prettier":[
       "error",
