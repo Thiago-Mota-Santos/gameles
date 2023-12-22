@@ -56,8 +56,8 @@ module.exports = {
     "typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "eslint-disable-next-line import/no-relative-packages": "off",
     "unicorn/filename-case": "off",
+    "@typescript-eslint/require-await": "off",
     "prettier/prettier":[
       "error",
       {
