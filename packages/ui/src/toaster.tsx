@@ -1,4 +1,4 @@
-import { useToast } from './useToast'
+import { useToast } from "./useToast";
 import {
   Toast,
   ToastClose,
@@ -6,10 +6,10 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from './toast'
+} from "./toast";
 
 export default function Toaster() {
-  const { toasts } = useToast()
+  const { toasts } = useToast();
 
   return (
     <ToastProvider>
@@ -23,13 +23,17 @@ export default function Toaster() {
       }) {
         return (
           <div key={id}>
-            {variant === 'destructive' ? (
+            {variant === "destructive" ? (
               <Toast {...props} className="bg-[#7F1D1D]">
                 <div className="grid gap-1">
-                  {title ? <ToastTitle className="text-white">{title}</ToastTitle> : null}
-                  {description ? <ToastDescription className="text-white">
+                  {title ? (
+                    <ToastTitle className="text-white">{title}</ToastTitle>
+                  ) : null}
+                  {description ? (
+                    <ToastDescription className="text-white">
                       {description}
-                    </ToastDescription> : null}
+                    </ToastDescription>
+                  ) : null}
                 </div>
                 {action}
                 <ToastClose />
@@ -37,20 +41,23 @@ export default function Toaster() {
             ) : (
               <Toast {...props} className="bg-white">
                 <div className="grid gap-1">
-                  {title ? <ToastTitle className="text-black">{title}</ToastTitle> : null}
-                  {description ? <ToastDescription className="text-black">
+                  {title ? (
+                    <ToastTitle className="text-black">{title}</ToastTitle>
+                  ) : null}
+                  {description ? (
+                    <ToastDescription className="text-black">
                       {description}
-                    </ToastDescription> : null}
+                    </ToastDescription>
+                  ) : null}
                 </div>
                 {action}
                 <ToastClose />
               </Toast>
             )}
           </div>
-        )
+        );
       })}
       <ToastViewport />
     </ToastProvider>
-  )
+  );
 }
-
