@@ -1,14 +1,14 @@
-import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql'
-import { Appointment } from './AppointmentModel'
-import { connectionDefinitions, globalIdField } from 'graphql-relay'
-import { nodeInterface, registerTypeLoader } from '../../node/typeRegister'
-import { AppointmentLoader } from './AppointmentLoader'
+import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
+import { Appointment } from "./AppointmentModel";
+import { connectionDefinitions, globalIdField } from "graphql-relay";
+import { nodeInterface, registerTypeLoader } from "../../node/typeRegister";
+import { AppointmentLoader } from "./AppointmentLoader";
 
 export const AppointmentType = new GraphQLObjectType<Appointment>({
-  name: 'Appointment',
-  description: 'Represent an Appointment list',
+  name: "Appointment",
+  description: "Represent an Appointment list",
   fields: () => ({
-    id: globalIdField('Appointment'),
+    id: globalIdField("Appointment"),
     clientName: {
       type: new GraphQLNonNull(GraphQLString),
       resolve: (appointment) => appointment.clientName,
@@ -33,11 +33,11 @@ export const AppointmentType = new GraphQLObjectType<Appointment>({
     },
   }),
   interfaces: () => [nodeInterface],
-})
+});
 
 export const AppointmentConnection = connectionDefinitions({
-  name: 'Appointment',
+  name: "Appointment",
   nodeType: AppointmentType,
-})
+});
 
-registerTypeLoader(AppointmentType, AppointmentLoader.load)
+registerTypeLoader(AppointmentType, AppointmentLoader.load);

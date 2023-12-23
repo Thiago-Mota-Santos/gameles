@@ -19,7 +19,7 @@ const postRegisterMutation = mutationWithClientMutationId({
     const { name, description, likes, comments } = args;
 
     if (!ctx.user) {
-      throw new Error("You must be logged in to register an appointment");
+      throw new Error("You must to be logged to make a post");
     }
 
     const newPost = await new PostsModel({
@@ -35,14 +35,14 @@ const postRegisterMutation = mutationWithClientMutationId({
     };
   },
   outputFields: {
-    appointmentEdge: {
+    postEdge: {
       type: PostsConnection.edgeType,
       resolve: async ({ id }, _, context) => {
         const post = await PostsLoader.load(context, id);
         if (!post) return null;
 
         return {
-          cursor: toGlobalId("Appointment", post.id),
+          cursor: toGlobalId("Post", post.id),
           node: post,
         };
       },

@@ -1,18 +1,18 @@
-import mongoose, { Document, Types } from 'mongoose'
-import bcrypt from 'bcryptjs'
-import { Maybe } from '@fullstack/types'
+import mongoose, { Document, Types } from "mongoose";
+import bcrypt from "bcryptjs";
+import { Maybe } from "@fullstack/types";
 
 export interface User extends Document {
-  username: string
-  email: string
-  password: string
-  createdAt: Date
-  authenticate: (password: string) => boolean
-  encryptPassword: (password: string | undefined) => string
-  _id: Types.ObjectId
+  username: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  authenticate: (password: string) => boolean;
+  encryptPassword: (password: string | undefined) => string;
+  _id: Types.ObjectId;
 }
 
-type UserDocument = Maybe<Document> & User
+type UserDocument = Maybe<Document> & User;
 
 const UserSchema = new mongoose.Schema<User>(
   {
@@ -35,27 +35,27 @@ const UserSchema = new mongoose.Schema<User>(
   },
 
   {
-    collection: 'User',
+    collection: "User",
     timestamps: true,
   },
-)
+);
 
-UserSchema.pre<UserDocument>('save', function encryptPasswordHook(next) {
-  if (this.isModified('password')) {
-    this.password = this.encryptPassword(this.password)
+UserSchema.pre<UserDocument>("save", function encryptPasswordHook(next) {
+  if (this.isModified("password")) {
+    this.password = this.encryptPassword(this.password);
   }
-  return next()
-})
+  return next();
+});
 
 UserSchema.methods = {
   authenticate(password: string) {
-    return bcrypt.compareSync(password, this.password)
+    return bcrypt.compareSync(password, this.password);
   },
   encryptPassword(password: string) {
-    return bcrypt.hashSync(password, 8)
+    return bcrypt.hashSync(password, 8);
   },
-}
+};
 
-export const UserModel = mongoose.model<UserDocument>('User', UserSchema)
+export const UserModel = mongoose.model<UserDocument>("User", UserSchema);
 
-export type { UserDocument }
+export type { UserDocument };

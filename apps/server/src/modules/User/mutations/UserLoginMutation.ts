@@ -1,18 +1,18 @@
-import { GraphQLNonNull, GraphQLString } from 'graphql'
-import { mutationWithClientMutationId } from 'graphql-relay'
-import { successField } from '@entria/graphql-mongo-helpers'
-import { UserType } from '../UserType'
-import { UserModel } from '../UserModel'
-import { generateJwtToken } from '../../../auth'
-import { GraphQLContext } from '../../../graphql/context'
+import { GraphQLNonNull, GraphQLString } from "graphql";
+import { mutationWithClientMutationId } from "graphql-relay";
+import { successField } from "@entria/graphql-mongo-helpers";
+import { UserType } from "../UserType";
+import { UserModel } from "../UserModel";
+import { generateJwtToken } from "../../../auth";
+import { GraphQLContext } from "../../../graphql/context";
 
 interface UserLogin {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 const userLoginMutation = mutationWithClientMutationId({
-  name: 'UserLoginMutation',
+  name: "UserLoginMutation",
   inputFields: {
     email: {
       type: new GraphQLNonNull(GraphQLString),
@@ -25,26 +25,26 @@ const userLoginMutation = mutationWithClientMutationId({
     const { email, password } = {
       password: args.password.trim(),
       email: args.email.trim().toLowerCase(),
-    }
+    };
 
-    const user = await UserModel.findOne({ email })
+    const user = await UserModel.findOne({ email });
     if (!user) {
-      throw new Error('User not found!')
+      throw new Error("User not found!");
     }
 
-    const passwordIsCorrect = user.authenticate(password)
+    const passwordIsCorrect = user.authenticate(password);
 
     if (!passwordIsCorrect) {
-      throw new Error('Password is incorrect!')
+      throw new Error("Password is incorrect!");
     }
 
-    const token = generateJwtToken(user._id)
+    const token = generateJwtToken(user._id);
 
     return {
       id: user._id,
       token,
-      success: 'Login In successfully',
-    }
+      success: "Login In successfully",
+    };
   },
   outputFields: {
     token: {
@@ -57,6 +57,6 @@ const userLoginMutation = mutationWithClientMutationId({
     },
     ...successField,
   },
-})
+});
 
-export { userLoginMutation }
+export { userLoginMutation };

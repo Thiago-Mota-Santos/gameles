@@ -1,14 +1,14 @@
-import { GraphQLNonNull, GraphQLString } from 'graphql'
-import { mutationWithClientMutationId } from 'graphql-relay'
-import { successField } from '@entria/graphql-mongo-helpers'
-import { UserType } from '../UserType'
-import { UserModel } from '../UserModel'
-import { generateJwtToken } from '../../../auth'
-import { GraphQLContext } from '../../../graphql/context'
+import { GraphQLNonNull, GraphQLString } from "graphql";
+import { mutationWithClientMutationId } from "graphql-relay";
+import { successField } from "@entria/graphql-mongo-helpers";
+import { UserType } from "../UserType";
+import { UserModel } from "../UserModel";
+import { generateJwtToken } from "../../../auth";
+import { GraphQLContext } from "../../../graphql/context";
 
 const userRegisterMutation = mutationWithClientMutationId({
-  name: 'UserRegister',
-  description: 'Register a new user',
+  name: "UserRegister",
+  description: "Register a new user",
   inputFields: {
     username: { type: new GraphQLNonNull(GraphQLString) },
     email: { type: new GraphQLNonNull(GraphQLString) },
@@ -17,10 +17,10 @@ const userRegisterMutation = mutationWithClientMutationId({
 
   mutateAndGetPayload: async ({ username, email, password, ...rest }) => {
     const hasUser =
-      (await UserModel.countDocuments({ email: email.trim() })) > 0
+      (await UserModel.countDocuments({ email: email.trim() })) > 0;
 
     if (hasUser) {
-      throw new Error('This user already exists')
+      throw new Error("This user already exists");
     }
 
     const user = await new UserModel({
@@ -28,15 +28,15 @@ const userRegisterMutation = mutationWithClientMutationId({
       email,
       password,
       ...rest,
-    }).save()
+    }).save();
 
-    const token = generateJwtToken(user)
+    const token = generateJwtToken(user);
 
     return {
       token,
       id: user._id,
-      success: 'User registered',
-    }
+      success: "User registered",
+    };
   },
   outputFields: {
     me: {
@@ -49,6 +49,6 @@ const userRegisterMutation = mutationWithClientMutationId({
     },
     ...successField,
   },
-})
+});
 
-export { userRegisterMutation }
+export { userRegisterMutation };

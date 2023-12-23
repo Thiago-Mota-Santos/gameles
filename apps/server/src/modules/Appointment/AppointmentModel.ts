@@ -1,16 +1,16 @@
-import mongoose, { Document, Types } from 'mongoose'
-import { Maybe } from '../../../../../packages/types/src/Maybe'
+import mongoose, { Document, Types } from "mongoose";
+import { Maybe } from "../../../../../packages/types/src/Maybe";
 
 export interface Appointment extends Document {
-  _id: Types.ObjectId
-  clientName: string
-  date: string
-  hour: string
-  graphicLocation: string
-  service: string
+  _id: Types.ObjectId;
+  clientName: string;
+  date: string;
+  hour: string;
+  graphicLocation: string;
+  service: string;
 }
 
-export type AppointmentDocument = Maybe<Document> & Appointment
+export type AppointmentDocument = Maybe<Document> & Appointment;
 
 const AppointmentSchema = new mongoose.Schema<Appointment>(
   {
@@ -41,11 +41,11 @@ const AppointmentSchema = new mongoose.Schema<Appointment>(
     },
   },
   {
-    collection: 'Appointment',
+    collection: "Appointment",
   },
-)
+);
 
 export const AppointmentModel = mongoose.model<AppointmentDocument>(
-  'Appointment',
+  "Appointment",
   AppointmentSchema,
-)
+);

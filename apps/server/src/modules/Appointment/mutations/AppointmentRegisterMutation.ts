@@ -1,13 +1,13 @@
-import { GraphQLContext } from './../../../graphql/context'
-import { GraphQLNonNull, GraphQLString } from 'graphql'
-import { mutationWithClientMutationId, toGlobalId } from 'graphql-relay'
-import { AppointmentConnection } from '../AppointmentType'
-import { Appointment, AppointmentModel } from '../AppointmentModel'
-import { AppointmentLoader } from '../AppointmentLoader'
-import { successField } from '@entria/graphql-mongo-helpers'
+import { GraphQLContext } from "./../../../graphql/context";
+import { GraphQLNonNull, GraphQLString } from "graphql";
+import { mutationWithClientMutationId, toGlobalId } from "graphql-relay";
+import { AppointmentConnection } from "../AppointmentType";
+import { Appointment, AppointmentModel } from "../AppointmentModel";
+import { AppointmentLoader } from "../AppointmentLoader";
+import { successField } from "@entria/graphql-mongo-helpers";
 
 const appointmentRegisterMutation = mutationWithClientMutationId({
-  name: 'AppointmentRegister',
+  name: "AppointmentRegister",
   inputFields: {
     clientName: { type: new GraphQLNonNull(GraphQLString) },
     date: { type: new GraphQLNonNull(GraphQLString) },
@@ -16,10 +16,10 @@ const appointmentRegisterMutation = mutationWithClientMutationId({
     service: { type: new GraphQLNonNull(GraphQLString) },
   },
   mutateAndGetPayload: async (args: Appointment, ctx: GraphQLContext) => {
-    const { clientName, date, graphicLocation, hour, service } = args
+    const { clientName, date, graphicLocation, hour, service } = args;
 
     if (!ctx.user) {
-      throw new Error('You must be logged in to register an appointment')
+      throw new Error("You must be logged in to register an appointment");
     }
 
     const newAppointment = await new AppointmentModel({
@@ -28,28 +28,28 @@ const appointmentRegisterMutation = mutationWithClientMutationId({
       graphicLocation,
       hour,
       service,
-    }).save()
+    }).save();
 
     return {
       id: newAppointment._id.toString(),
-      success: 'New appointment has been created',
-    }
+      success: "New appointment has been created",
+    };
   },
   outputFields: {
     appointmentEdge: {
       type: AppointmentConnection.edgeType,
       resolve: async ({ id }, _, context) => {
-        const appointment = await AppointmentLoader.load(context, id)
-        if (!appointment) return null
+        const appointment = await AppointmentLoader.load(context, id);
+        if (!appointment) return null;
 
         return {
-          cursor: toGlobalId('Appointment', appointment._id),
+          cursor: toGlobalId("Appointment", appointment._id),
           node: appointment,
-        }
+        };
       },
       ...successField,
     },
   },
-})
+});
 
-export { appointmentRegisterMutation }
+export { appointmentRegisterMutation };
