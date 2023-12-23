@@ -1,4 +1,4 @@
-import { GraphQLNonNull, GraphQLString } from "graphql";
+import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { mutationWithClientMutationId, toGlobalId } from "graphql-relay";
 import { successField } from "@entria/graphql-mongo-helpers";
 import { Posts, PostsModel } from "../PostsModel";
@@ -9,11 +9,9 @@ import { PostsLoader } from "../PostsLoader";
 const postRegisterMutation = mutationWithClientMutationId({
   name: "PostRegisterMutation",
   inputFields: {
-    clientName: { type: new GraphQLNonNull(GraphQLString) },
-    date: { type: new GraphQLNonNull(GraphQLString) },
-    hour: { type: new GraphQLNonNull(GraphQLString) },
-    graphicLocation: { type: new GraphQLNonNull(GraphQLString) },
-    service: { type: new GraphQLNonNull(GraphQLString) },
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    likes: { type: new GraphQLNonNull(GraphQLInt) },
   },
   mutateAndGetPayload: async (args: Posts, ctx: GraphQLContext) => {
     const { name, description, likes, comments } = args;

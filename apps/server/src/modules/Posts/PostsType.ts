@@ -28,10 +28,6 @@ export const PostsType = new GraphQLObjectType<Posts>({
       type: new GraphQLNonNull(GraphQLString),
       resolve: (post) => post.likes,
     },
-    comments: {
-      type: new GraphQLNonNull(GraphQLInt),
-      resolve: (post) => post.comments,
-    },
   }),
   interfaces: () => [nodeInterface],
 });

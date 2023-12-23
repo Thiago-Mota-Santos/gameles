@@ -30,17 +30,6 @@ const PostSchema = new mongoose.Schema<Posts>(
       type: Number,
       required: true,
     },
-    comments: {
-      name: {
-        type: String,
-      },
-      message: {
-        type: String,
-      },
-      likes: {
-        type: Number,
-      },
-    },
   },
   {
     collection: "Posts",
