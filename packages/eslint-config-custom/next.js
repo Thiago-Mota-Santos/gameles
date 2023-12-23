@@ -60,6 +60,7 @@ module.exports = {
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
     "prettier/prettier":[
       "error",
       {
