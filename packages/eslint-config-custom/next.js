@@ -58,6 +58,7 @@ module.exports = {
     "@typescript-eslint/no-misused-promises": "off",
     "unicorn/filename-case": "off",
     "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/consistent-type-imports": "off",
     "prettier/prettier":[
       "error",
       {
