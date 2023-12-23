@@ -1,10 +1,10 @@
-import { ParameterizedContext } from 'koa'
-import { UserDocument } from '../modules/User/UserModel'
-import { DataLoaders } from '../modules/loader/loaderRegister'
-import { Maybe } from '../../../../packages/types/src/Maybe'
+import type { ParameterizedContext } from "koa";
+import { Maybe } from "@repo/types";
+import type { UserDocument } from "../modules/User/UserModel";
+import type { DataLoaders } from "../modules/loader/loaderRegister";
 
 export interface GraphQLContext {
-  ctx: ParameterizedContext
-  user?: Maybe<UserDocument>
-  dataloaders: DataLoaders
+  ctx: ParameterizedContext;
+  user?: Maybe<UserDocument>;
+  dataloaders: DataLoaders;
 }
