@@ -20,7 +20,7 @@ const postRegisterMutation = mutationWithClientMutationId({
     rt: { type: new GraphQLNonNull(GraphQLBoolean) },
   },
   mutateAndGetPayload: async (args: Posts, ctx: GraphQLContext) => {
-    const { name, description, likes, comments, rt } = args;
+    const { name, description, likes, comments, rt, imageUrl } = args;
 
     if (!ctx.user) {
       throw new Error("You must to be logged to make a post");
@@ -32,6 +32,7 @@ const postRegisterMutation = mutationWithClientMutationId({
       likes,
       comments,
       rt,
+      imageUrl,
     }).save();
 
     return {
