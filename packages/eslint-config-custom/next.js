@@ -61,6 +61,9 @@ module.exports = {
     "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
+    "import/no-unresolved" : "off",
+    "tsdoc/syntax": "off",
+    "@typescript-eslint/ban-tslint-comment": "off",
     "prettier/prettier":[
       "error",
       {
