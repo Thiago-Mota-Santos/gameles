@@ -1,4 +1,5 @@
 import {
+  GraphQLBoolean,
   GraphQLInt,
   GraphQLNonNull,
   GraphQLObjectType,
@@ -25,15 +26,23 @@ export const PostsType = new GraphQLObjectType<Posts>({
     },
 
     likes: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(GraphQLInt),
       resolve: (post) => post.likes,
+    },
+    rt: {
+      type: new GraphQLNonNull(GraphQLBoolean),
+      resolve: (post) => post.rt,
+    },
+    imageUrl: {
+      type: new GraphQLNonNull(GraphQLString),
+      resolve: (post) => post.imageUrl,
     },
   }),
   interfaces: () => [nodeInterface],
 });
 
 export const PostsConnection = connectionDefinitions({
-  name: "Appointment",
+  name: "Posts",
   nodeType: PostsType,
 });
 

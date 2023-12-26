@@ -5,8 +5,10 @@ export interface Posts extends Document {
   _id: Types.ObjectId;
   name: string;
   description: string;
+  imageUrl: string;
   likes: number;
   comments: string;
+  rt: boolean;
 }
 
 export type PostsDocument = Document & Posts;
@@ -26,9 +28,14 @@ const PostSchema = new mongoose.Schema<Posts>(
       min: 5,
       max: 60,
     },
+    imageUrl: {
+      type: String,
+    },
     likes: {
       type: Number,
-      required: true,
+    },
+    rt: {
+      type: Boolean,
     },
   },
   {

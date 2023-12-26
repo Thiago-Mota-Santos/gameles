@@ -1,4 +1,9 @@
-import { GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
+import {
+  GraphQLBoolean,
+  GraphQLInt,
+  GraphQLNonNull,
+  GraphQLString,
+} from "graphql";
 import { mutationWithClientMutationId, toGlobalId } from "graphql-relay";
 import { successField } from "@entria/graphql-mongo-helpers";
 import { Posts, PostsModel } from "../PostsModel";
@@ -12,9 +17,10 @@ const postRegisterMutation = mutationWithClientMutationId({
     name: { type: new GraphQLNonNull(GraphQLString) },
     description: { type: new GraphQLNonNull(GraphQLString) },
     likes: { type: new GraphQLNonNull(GraphQLInt) },
+    rt: { type: new GraphQLNonNull(GraphQLBoolean) },
   },
   mutateAndGetPayload: async (args: Posts, ctx: GraphQLContext) => {
-    const { name, description, likes, comments } = args;
+    const { name, description, likes, comments, rt } = args;
 
     if (!ctx.user) {
       throw new Error("You must to be logged to make a post");
@@ -25,6 +31,7 @@ const postRegisterMutation = mutationWithClientMutationId({
       description,
       likes,
       comments,
+      rt,
     }).save();
 
     return {
