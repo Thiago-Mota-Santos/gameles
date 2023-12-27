@@ -1,10 +1,28 @@
 import Link from "next/link";
 import Image from "next/image";
+import { graphql, useFragment } from "react-relay";
 import { CardHeader, CardContent, CardFooter, Card } from "../ui/Card";
 import { AvatarImage, AvatarFallback, Avatar } from "../ui/Avatar";
+import { Timeline$key } from "@/__generated__/Timeline.graphql";
 
-export function Timeline() {
-  //list posts
+interface PostProps {
+  postDetails: Timeline$key;
+}
+
+export function Timeline({ postDetails }: PostProps) {
+  const post = useFragment(
+    graphql`
+      fragment Timeline on Posts {
+        name
+        description
+        likes
+        rt
+        imageUrl
+        id
+      }
+    `,
+    postDetails,
+  );
 
   return (
     <main className="p-6 bg-gray-100">
@@ -16,68 +34,30 @@ export function Timeline() {
               href="#"
             >
               <Avatar className="w-8 h-8 border">
-                <AvatarImage alt="@johndoe" src="/placeholder-avatar.jpg" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarImage alt="avatar image" src="/placeholder-avatar.jpg" />
+                <AvatarFallback>post</AvatarFallback>
               </Avatar>
-              John Doe
+              {post.name}
             </Link>
           </CardHeader>
           <CardContent className="p-4">
-            <p className="mb-4">Just posted a new photo from my recent trip!</p>
+            <p className="mb-4">{post.description}</p>
             <Image
               alt="post image"
               className="w-full h-64 object-cover rounded-lg"
               height="200"
-              src="https://plus.unsplash.com/premium_photo-1703385178754-f16e0a332e4a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              style={{
-                aspectRatio: "400/200",
-                objectFit: "cover",
-              }}
+              src={post.imageUrl}
               width="400"
             />
           </CardContent>
           <CardFooter className="p-4 flex justify-between items-center">
             <div className="flex items-center">
               <HeartIcon className="w-4 h-4 mr-2" />
-              <span>120 likes</span>
+              <span>{post.likes}</span>
             </div>
             <div className="flex items-center">
               <RepeatIcon className="w-4 h-4 mr-2" />
-              <span>30 retweets</span>
-            </div>
-          </CardFooter>
-        </Card>
-        <Card className="rounded-lg shadow-md mb-6">
-          <CardHeader className="p-4 flex flex-row items-center">
-            <Link
-              className="flex items-center gap-2 text-sm font-semibold"
-              href="#"
-            >
-              <Avatar className="w-8 h-8 border">
-                <AvatarImage alt="@janedoe" src="/placeholder-avatar.jpg" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              Jane Doe
-            </Link>
-          </CardHeader>
-          <CardContent className="p-4">
-            <p className="mb-4">Enjoying a beautiful sunset at the beach 🌅</p>
-            <Image
-              alt="post image"
-              className="w-full h-64 object-cover rounded-lg"
-              height="200"
-              src="/placeholder.svg"
-              width="400"
-            />
-          </CardContent>
-          <CardFooter className="p-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <HeartIcon className="w-4 h-4 mr-2" />
-              <span>80 likes</span>
-            </div>
-            <div className="flex items-center">
-              <RepeatIcon className="w-4 h-4 mr-2" />
-              <span>20 retweets</span>
+              <span>{post.rt}</span>
             </div>
           </CardFooter>
         </Card>
