@@ -4,10 +4,10 @@ import { parseCookies } from "nookies";
 import { useState } from "react";
 import { useMutation } from "react-relay";
 import { useRouter } from "next/navigation";
-import { Input } from "../../../../../packages/ui/src/input";
-import { Icons } from "../../../../../packages/ui/src/icons";
+import { Input } from "@repo/ui/input";
+import { Icons } from "@repo/ui/icons";
+import { toast } from "@repo/ui/useToast";
 import { UserAuth } from "../../context/AuthContext";
-import { toast } from "../../../../../packages/ui/src/useToast";
 import { SignInMutation } from "./SigninMutation";
 
 export default function Signin() {
