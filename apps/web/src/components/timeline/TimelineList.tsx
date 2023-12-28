@@ -1,14 +1,17 @@
 import { graphql, usePaginationFragment } from "react-relay";
 import { Timeline } from "./Timeline";
 import { TimelineList$key } from "@/__generated__/TimelineList.graphql";
+import { TimelinePaginationQuery } from "@/__generated__/TimelinePaginationQuery.graphql";
 
 interface TimelineListProps {
   query: TimelineList$key;
-  search: string;
 }
 
 export function TimelineList({ query }: TimelineListProps) {
-  const { data } = usePaginationFragment<_, TimelineList$key>(
+  const { data } = usePaginationFragment<
+    TimelinePaginationQuery,
+    TimelineList$key
+  >(
     graphql`
       fragment TimelineList on Query
       @argumentDefinitions(
@@ -17,11 +20,11 @@ export function TimelineList({ query }: TimelineListProps) {
       )
       @refetchable(queryName: "TimelinePaginationQuery") {
         posts(first: $first, after: $after)
-          @connection(key: "TimelineList_posts") {
+          @connection(key: "TimelineList_posts", filters: []) {
           edges {
             node {
               id
-              ...Timeline
+              ...TimelineDetails
             }
           }
         }
@@ -34,13 +37,11 @@ export function TimelineList({ query }: TimelineListProps) {
 
   return (
     <div>
-      {posts.edges.length ? (
-        <div className="flex flex-col items-center justify-center">
-          {posts.edges.map(({ node }) => (
-            <Timeline key={node.id} postDetails={node} />
-          ))}
-        </div>
-      ) : null}
+      <div className="flex flex-col items-center justify-center">
+        {posts.edges.map(({ node }) => (
+          <Timeline key={node.id} query={node} />
+        ))}
+      </div>
     </div>
   );
 }
