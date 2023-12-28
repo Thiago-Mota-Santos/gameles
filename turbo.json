@@ -7,8 +7,16 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^build"],
+      "env": [
+        "PORT",
+        "NODE_ENV",
+        "NEXT_PUBLIC_GRAPHQL_ENDPOINT",
+        "MONGO_URI",
+        "JWT_SECRET"
+      ] 
     },
+   
     "dev": {
       "cache": false,
       "persistent": true
