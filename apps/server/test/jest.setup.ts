@@ -1,4 +1,3 @@
 Object.assign(process.env, {
-    JWT_SECRET: 'testing',
-})
-
+  JWT_SECRET: "testing",
+});

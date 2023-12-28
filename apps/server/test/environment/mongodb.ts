@@ -1,6 +1,6 @@
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import NodeEnvironment from 'jest-environment-node';
-import { JestEnvironmentConfig, EnvironmentContext } from '@jest/environment';
+import { MongoMemoryServer } from "mongodb-memory-server";
+import NodeEnvironment from "jest-environment-node";
+import { JestEnvironmentConfig, EnvironmentContext } from "@jest/environment";
 
 class MongoDbEnvironment extends NodeEnvironment {
   private mongod: MongoMemoryServer;
@@ -10,7 +10,7 @@ class MongoDbEnvironment extends NodeEnvironment {
 
     this.mongod = new MongoMemoryServer({
       binary: {
-        version: '6.0.4',
+        version: "6.0.4",
       },
     });
   }

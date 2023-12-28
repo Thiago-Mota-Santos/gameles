@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-import { restartCounters } from './counters';
+import { restartCounters } from "./counters";
 
 const clearDatabase = async () => {
   await mongoose.connection.dropDatabase();
