@@ -3,16 +3,16 @@ import Image from "next/image";
 import { graphql, useFragment } from "react-relay";
 import { CardHeader, CardContent, CardFooter, Card } from "../ui/Card";
 import { AvatarImage, AvatarFallback, Avatar } from "../ui/Avatar";
-import { Timeline$key } from "@/__generated__/Timeline.graphql";
+import { TimelineDetails$key } from "@/__generated__/TimelineDetails.graphql";
 
 interface PostProps {
-  postDetails: Timeline$key;
+  query: TimelineDetails$key;
 }
 
-export function Timeline({ postDetails }: PostProps) {
-  const post = useFragment(
+export function Timeline({ query }: PostProps) {
+  const post = useFragment<TimelineDetails$key>(
     graphql`
-      fragment Timeline on Posts {
+      fragment TimelineDetails on Posts {
         name
         description
         likes
@@ -21,7 +21,7 @@ export function Timeline({ postDetails }: PostProps) {
         id
       }
     `,
-    postDetails,
+    query,
   );
 
   return (
@@ -46,7 +46,7 @@ export function Timeline({ postDetails }: PostProps) {
               alt="post image"
               className="w-full h-64 object-cover rounded-lg"
               height="200"
-              src={post.imageUrl}
+              src={post.imageUrl || ""}
               width="400"
             />
           </CardContent>
