@@ -2,15 +2,15 @@ import {
   ConnectionHandler,
   RecordProxy,
   RecordSourceProxy,
-} from 'relay-runtime'
+} from "relay-runtime";
 
 interface ConnectionUpdaterArgs {
-  store: RecordSourceProxy
-  parentId: string
-  connectionName: string
-  edge?: RecordProxy
-  before?: boolean
-  deleteNode?: boolean
+  store: RecordSourceProxy;
+  parentId: string;
+  connectionName: string;
+  edge?: RecordProxy;
+  before?: boolean;
+  deleteNode?: boolean;
 }
 
 const connectionUpdater = ({
@@ -22,26 +22,26 @@ const connectionUpdater = ({
 }: ConnectionUpdaterArgs) => {
   if (edge) {
     if (!parentId) {
-      return
+      return;
     }
   }
 
-  const parentProxy = store.get(parentId)
+  const parentProxy = store.get(parentId);
 
   if (!parentProxy) {
-    return
+    return;
   }
 
-  const conn = ConnectionHandler.getConnection(parentProxy, connectionName)
+  const conn = ConnectionHandler.getConnection(parentProxy, connectionName);
   if (!conn) {
-    return
+    return;
   }
 
   if (before) {
-    ConnectionHandler.insertEdgeBefore(conn, edge)
+    ConnectionHandler.insertEdgeBefore(conn, edge);
   } else {
-    ConnectionHandler.insertEdgeAfter(conn, edge)
+    ConnectionHandler.insertEdgeAfter(conn, edge);
   }
-}
+};
 
-export { connectionUpdater }
+export { connectionUpdater };
