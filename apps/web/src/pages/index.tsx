@@ -1,49 +1,58 @@
-import { ChangeEvent, useState } from 'react'
-import { PreloadedQuery, graphql, usePreloadedQuery } from 'react-relay'
-import { GetServerSideProps } from 'next'
-import { getPreloadedQuery } from '../relay/network'
+import { GetServerSideProps } from "next";
+import { PreloadedQuery, graphql, usePreloadedQuery } from "react-relay";
+import { getCookie } from "@/utils/getToken";
+import Header from "@/components/Header";
+import { getPreloadedQuery } from "@/relay/network";
+import pageQuery, {
+  pagesQuery as pageQueryType,
+} from "@/__generated__/pagesQuery.graphql";
+import PostPublish from "@/components/PostPublish";
+import { TimelineList } from "@/components/timeline/TimelineList";
 
-import Logout from '../components/Logout'
-import { AppointmentList } from '../components/appointments/AppointmentList'
-import { getCookie } from '@/utils/getToken'
+interface HomeProps {
+  queryRefs: {
+    pageQuery: PreloadedQuery<pageQueryType>;
+  };
+}
 
-// interface HomeProps {
-//   queryRefs: {
-//     pageQuery: PreloadedQuery<pageQueryType>
-//   }
-// }
+// pageQueryType
 
-// const Appointment = graphql`
-//   query pagesQuery @preloadable {
-//     ...AppointmentList_appointment
-//   }
-// `
+const Post = graphql`
+  query pagesQuery @preloadable {
+    ...TimelineList
+  }
+`;
 
 export default function Home({ queryRefs }: HomeProps) {
-  // const query = usePreloadedQuery(Appointment, queryRefs.pageQuery)
+  const query = usePreloadedQuery(Post, queryRefs.pageQuery);
+
   // const [search, setSearch] = useState('')
   // const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
   //   setSearch(e.target.value)
   // }
 
   return (
-    <main className="h-full flex-items justify-center">
-       <h1>gameles: </h1>
+    <main>
+      <Header />
+      <div className="max-w-2xl mx-auto">
+        <PostPublish />
+        <TimelineList query={query} />
+      </div>
     </main>
-  )
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const token = getCookie(ctx.req.headers)
+  const token = getCookie(ctx.req.headers);
   if (!token) {
     return {
       redirect: {
         permanent: false,
-        destination: '/auth/signin',
+        destination: "/auth/signin",
       },
 
       props: {},
-    }
+    };
   }
 
   return {
@@ -52,5 +61,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         pageQuery: await getPreloadedQuery(pageQuery, {}, token),
       },
     },
-  }
-}
+  };
+};
