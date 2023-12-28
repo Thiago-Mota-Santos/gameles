@@ -64,6 +64,7 @@ module.exports = {
     "import/no-unresolved" : "off",
     "tsdoc/syntax": "off",
     "@typescript-eslint/ban-tslint-comment": "off",
+    "camelcase": "off",
     "prettier/prettier":[
       "error",
       {
