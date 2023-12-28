@@ -4,15 +4,15 @@
  */
 
 export default {
-  moduleFileExtensions: ['ts', 'js', 'tsx', 'json'],
+  moduleFileExtensions: ["ts", "js", "tsx", "json"],
 
-  preset: 'ts-jest',
+  preset: "ts-jest",
   resetModules: false,
-  setupFiles: ['./test/jest.setup.ts'],
-  testEnvironment: './test/environment/mongodb.ts',
-  testPathIgnorePatterns: ['/node_modules/'],
+  setupFiles: ["./test/jest.setup.ts"],
+  testEnvironment: "./test/environment/mongodb.ts",
+  testPathIgnorePatterns: ["/node_modules/"],
 
   transform: {
-    '^.+\\.tsx?$': 'esbuild-jest',
+    "^.+\\.tsx?$": "esbuild-jest",
   },
-}
+};
