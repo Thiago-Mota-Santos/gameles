@@ -4,7 +4,6 @@ import { successField } from "@entria/graphql-mongo-helpers";
 import { UserType } from "../UserType";
 import { UserModel } from "../UserModel";
 import { generateJwtToken } from "../../../auth";
-import { GraphQLContext } from "../../../graphql/context";
 
 interface UserLogin {
   email: string;
@@ -53,7 +52,7 @@ const userLoginMutation = mutationWithClientMutationId({
     },
     me: {
       type: UserType,
-      resolve: async ({ id }) => await UserModel.findById(id),
+      resolve: async ({ id }) => UserModel.findById(id),
     },
     ...successField,
   },
