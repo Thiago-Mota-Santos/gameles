@@ -1,7 +1,9 @@
-type IconProps = React.HTMLAttributes<SVGElement>;
+import * as React from "react";
 
-export const Icons = {
-  Spinner: (props: IconProps) => (
+type SpinnerProps = React.SVGProps<SVGSVGElement>
+
+function Spinner(props: SpinnerProps): JSX.Element {
+  return (
     <svg
       fill="none"
       height="24"
@@ -16,5 +18,11 @@ export const Icons = {
     >
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
     </svg>
-  ),
+  );
+}
+
+export const Icons = {
+  Spinner,
 };
+
+// Restante do código...
