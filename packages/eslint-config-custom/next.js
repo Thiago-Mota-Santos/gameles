@@ -63,6 +63,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-argument": "off",
     "import/no-unresolved" : "off",
     "tsdoc/syntax": "off",
+    "no-undef": "off",
     "@typescript-eslint/ban-tslint-comment": "off",
     "camelcase": "off",
     "prettier/prettier":[
