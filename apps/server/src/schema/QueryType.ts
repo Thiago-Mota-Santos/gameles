@@ -16,7 +16,7 @@ const me: GraphQLFieldConfig<any, any> = {
   type: UserType,
   description: "user logged",
   resolve: (_root, _args, context) =>
-    UserLoader.loadAll(context, context.user?._id),
+    UserLoader.load(context, context.user?._id),
 };
 
 export const QueryType = new GraphQLObjectType({
