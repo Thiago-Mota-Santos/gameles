@@ -2,7 +2,7 @@ import * as React from "react";
 
 type SpinnerProps = React.SVGProps<SVGSVGElement>
 
-function Spinner(props: SpinnerProps): JSX.Element {
+function Spinner(props: SpinnerProps): React.ReactNode {
   return (
     <svg
       fill="none"
@@ -25,4 +25,3 @@ export const Icons = {
   Spinner,
 };
 
-// Restante do código...

@@ -12,4 +12,4 @@ export { Flex } from "@radix-ui/themes"
 
 export { Avatar, AvatarFallback, AvatarImage } from "./avatar"
 
-export { Toaster } from 'sonner'
+export { Toaster, toast } from 'sonner'
