@@ -1,11 +1,22 @@
-import { Button, Inset } from "@radix-ui/themes";
+import { Inset } from "@radix-ui/themes";
 import { Input } from "@repo/ui/input";
+import { Button } from "@repo/ui/button";
 import { ImageIcon } from "lucide-react";
-import { useMutation } from "react-relay";
+import { PreloadedQuery, graphql, useMutation, usePreloadedQuery } from "react-relay";
 import { ChangeEvent, useState } from "react";
+import { GetServerSideProps } from "next";
 import { postMutation, updater } from "./timeline/mutations/post";
+import { getCookie } from "@/utils/getToken";
+import { getPreloadedQuery } from "@/relay/network";
 
-export default function PostPublish() {
+interface PostPublishProps {
+  queryRefs: {
+    pageQuery: PreloadedQuery<>;
+  };
+}
+
+export default function PostPublish({ queryRefs }: PostPublishProps) {
+  const query = usePreloadedQuery(Post, queryRefs.pageQuery);
   const [post, setPost] = useState("");
   const [request] = useMutation(postMutation);
 
@@ -62,3 +73,25 @@ export default function PostPublish() {
     </main>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const token = getCookie(ctx.req.headers);
+  if (!token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth/signin",
+      },
+
+      props: {},
+    };
+  }
+
+  return {
+    props: {
+      preloadedQueries: {
+        pageQuery: await getPreloadedQuery(pageQuery, {}, token),
+      },
+    },
+  };
+};
