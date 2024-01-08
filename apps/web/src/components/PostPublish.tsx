@@ -2,7 +2,12 @@ import { Inset } from "@radix-ui/themes";
 import { Input } from "@repo/ui/input";
 import { Button } from "@repo/ui/button";
 import { ImageIcon } from "lucide-react";
-import { PreloadedQuery, graphql, useMutation, usePreloadedQuery } from "react-relay";
+import {
+  PreloadedQuery,
+  graphql,
+  useMutation,
+  usePreloadedQuery,
+} from "react-relay";
 import { ChangeEvent, useState } from "react";
 import { GetServerSideProps } from "next";
 import { postMutation, updater } from "./timeline/mutations/post";
@@ -15,7 +20,7 @@ interface PostPublishProps {
   };
 }
 
-export default function PostPublish({ queryRefs }: PostPublishProps) {
+export default function PostPublish({ queryRefs }) {
   const query = usePreloadedQuery(Post, queryRefs.pageQuery);
   const [post, setPost] = useState("");
   const [request] = useMutation(postMutation);
